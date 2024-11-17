@@ -61,7 +61,7 @@ local function create_buffer(type, size)
     if type == "float" then
         bufnr = vim.api.nvim_create_buf(false, true)
         local dimensions = Util.calculate_float_dimensions(config.float_size)
-        vim.api.nvim_open_win(bufnr, true, {
+        M.win = vim.api.nvim_open_win(bufnr, true, {
             style = "minimal",
             relative = "editor",
             width = dimensions.width,
@@ -96,7 +96,7 @@ local function create_buffer(type, size)
         end
     end
     vim.api.nvim_set_option_value("filetype", "Builder", { buf = bufnr })
-    Util.create_resize_autocmd(0, type, size, config)
+    Util.create_resize_autocmd(M.win, type, size, config)
     set_keymaps(bufnr)
     return bufnr
 end
